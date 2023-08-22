@@ -15,6 +15,9 @@ function App() {
     const target = e.currentTarget as Window;
     setCurrentWidth(target.innerWidth);
   });
+  function handleOnDelete(id: number) {
+    setColumns(columns.filter((item) => item.getId !== id));
+  }
   return (
     <>
       {currentwidth < 850 ? (
@@ -35,7 +38,14 @@ function App() {
 
       <main className="main">
         {columns.map((column: column) => {
-          return <Column key={column.getId} tittle={column.getTittle} />;
+          return (
+            <Column
+              key={column.getId}
+              id={column.getId}
+              onDelete={handleOnDelete}
+              tittle={column.getTittle}
+            />
+          );
         })}
       </main>
     </>

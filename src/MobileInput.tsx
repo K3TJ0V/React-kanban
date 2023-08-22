@@ -30,6 +30,7 @@ function MobileInput({
     }
     if (event.key === "Enter") {
       const newColumn = new column(columnNextID, currentText.trim(), []);
+      console.log(newColumn.getId);
       setColumns([...columnList, newColumn]);
       setColumnNextID(columnNextID + 1);
       setCurrentText("");
