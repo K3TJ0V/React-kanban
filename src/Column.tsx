@@ -1,4 +1,6 @@
+import { useState } from "react";
 import "./styles/Column.scss";
+import Agreement from "./Agreement";
 
 interface ColumnProps {
   id: number;
@@ -7,6 +9,8 @@ interface ColumnProps {
 }
 
 function Column({ id, tittle, onDelete }: ColumnProps) {
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <>
       <section className="column">
@@ -15,11 +19,20 @@ function Column({ id, tittle, onDelete }: ColumnProps) {
         <button
           className="column__delete"
           onClick={() => {
-            onDelete(id);
+            setShowPopup(!showPopup);
           }}
         >
           Delete column
         </button>
+        {showPopup && (
+          <Agreement
+            id={id}
+            onYes={() => {
+              onDelete(id);
+            }}
+            onNo={setShowPopup}
+          />
+        )}
       </section>
     </>
   );
