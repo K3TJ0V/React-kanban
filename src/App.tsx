@@ -10,6 +10,7 @@ function App() {
   const [currentwidth, setCurrentWidth] = useState(0);
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
   const [columns, setColumns] = useState<Array<column>>([]);
+  const [columnNextID, setColumnNextID] = useState(1);
 
   window.addEventListener("resize", (e: Event) => {
     const target = e.currentTarget as Window;
@@ -33,6 +34,8 @@ function App() {
           hamburger={hamburgerVisibility}
           setColumns={setColumns}
           columnList={columns}
+          currentID={columnNextID}
+          setCurrentID={setColumnNextID}
         ></MobileInput>
       )}
 
@@ -44,6 +47,8 @@ function App() {
               id={column.getId}
               onDelete={handleOnDelete}
               tittle={column.getTittle}
+              taskList={column.getTaskList}
+              setTaskList={column.setTaskList}
             />
           );
         })}

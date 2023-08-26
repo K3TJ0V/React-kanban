@@ -30,9 +30,12 @@ export class task {
 
   private description: string;
 
-  constructor(id: number, desc: string) {
+  private shortDesc: string;
+
+  constructor(id: number, desc: string, shortDesc: string) {
     this.id = id;
     this.description = desc;
+    this.shortDesc = shortDesc;
   }
 
   public get getID() {
@@ -41,7 +44,13 @@ export class task {
   public get getDesc() {
     return this.description;
   }
+  public get getShortDesc() {
+    return this.shortDesc;
+  }
   public set setDesc(newDesc: string) {
     this.description = newDesc;
+  }
+  public set setShortDesc(newShortDesc: string) {
+    this.shortDesc = newShortDesc;
   }
 }

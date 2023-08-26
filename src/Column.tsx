@@ -1,15 +1,22 @@
 import { useState } from "react";
 import "./styles/Column.scss";
 import Agreement from "./Agreement";
+import { task } from "./Classes";
+import Task from "./Task";
 
 interface ColumnProps {
   id: number;
   tittle: string;
   onDelete: (id: number) => void;
+  taskList: task[];
+  setTaskList: task[];
 }
 
-function Column({ id, tittle, onDelete }: ColumnProps) {
+function Column({ id, tittle, onDelete, taskList, setTaskList }: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
+
+  setTaskList = [...taskList, new task(1, "test", "test")];
+  console.log(typeof taskList);
 
   return (
     <>
@@ -24,6 +31,17 @@ function Column({ id, tittle, onDelete }: ColumnProps) {
         >
           Delete column
         </button>
+        {taskList.map((taskItem) => {
+          return (
+            <Task
+              id={taskItem.getID}
+              getDesc={taskItem.getDesc}
+              getShortDesc={taskItem.getShortDesc}
+              setDescription={taskItem.setDesc}
+              setShortDescription={taskItem.setShortDesc}
+            />
+          );
+        })}
         {showPopup && (
           <Agreement
             id={id}

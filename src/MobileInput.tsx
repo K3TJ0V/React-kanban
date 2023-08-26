@@ -8,16 +8,19 @@ interface MobileInputProps {
   columnList: column[];
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>;
   setColumns: React.Dispatch<React.SetStateAction<column[]>>;
+  currentID: number;
+  setCurrentID: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function MobileInput({
   hamburger,
   columnList,
+  currentID,
+  setCurrentID,
   setHamburger,
   setColumns,
 }: MobileInputProps) {
   const [currentText, setCurrentText] = useState("");
-  const [columnNextID, setColumnNextID] = useState(1);
 
   function handleOnChange(event: React.FormEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
@@ -29,10 +32,9 @@ function MobileInput({
       return;
     }
     if (event.key === "Enter") {
-      const newColumn = new column(columnNextID, currentText.trim(), []);
-      console.log(newColumn.getId);
+      const newColumn = new column(currentID, currentText.trim(), []);
       setColumns([...columnList, newColumn]);
-      setColumnNextID(columnNextID + 1);
+      setCurrentID(currentID + 1);
       setCurrentText("");
     }
   }
