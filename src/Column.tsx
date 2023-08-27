@@ -1,27 +1,33 @@
 import { useState } from "react";
 import "./styles/Column.scss";
 import Agreement from "./Agreement";
-import { task } from "./Classes";
+import { task, column } from "./Classes";
 import Task from "./Task";
 
 interface ColumnProps {
-  id: number;
-  tittle: string;
+  instance: column;
   onDelete: (id: number) => void;
-  taskList: task[];
-  setTaskList: task[];
 }
 
-function Column({ id, tittle, onDelete, taskList, setTaskList }: ColumnProps) {
+function Column({ instance, onDelete }: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
+  const [currentTaskList, setCurrentTaskList] = useState<task[]>([]);
+  const [nextTaskID, setNextTaskID] = useState(1);
 
-  setTaskList = [...taskList, new task(1, "test", "test")];
-  console.log(typeof taskList);
+  function handleAddTask() {
+    setCurrentTaskList([
+      ...currentTaskList,
+      new task(nextTaskID, "test", "test"),
+    ]);
+    instance.taskList = currentTaskList;
+    setNextTaskID(nextTaskID + 1);
+    console.log(instance.taskList);
+  }
 
   return (
     <>
       <section className="column">
-        <h2 className="column__h2">{tittle} </h2>
+        <h2 className="column__h2">{instance.tittle} </h2>
         <hr style={{ width: "80%" }} />
         <button
           className="column__delete"
@@ -31,22 +37,22 @@ function Column({ id, tittle, onDelete, taskList, setTaskList }: ColumnProps) {
         >
           Delete column
         </button>
-        {taskList.map((taskItem) => {
+        <button onClick={handleAddTask}>add</button>
+        {currentTaskList.map((taskItem) => {
           return (
             <Task
-              id={taskItem.getID}
-              getDesc={taskItem.getDesc}
-              getShortDesc={taskItem.getShortDesc}
-              setDescription={taskItem.setDesc}
-              setShortDescription={taskItem.setShortDesc}
+              key={taskItem.id}
+              id={taskItem.id}
+              description={taskItem.desc}
+              shortDescription={taskItem.shortDesc}
             />
           );
         })}
         {showPopup && (
           <Agreement
-            id={id}
+            id={instance.id}
             onYes={() => {
-              onDelete(id);
+              onDelete(instance.id);
             }}
             onNo={setShowPopup}
           />

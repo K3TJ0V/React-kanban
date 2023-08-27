@@ -17,7 +17,7 @@ function App() {
     setCurrentWidth(target.innerWidth);
   });
   function handleOnDelete(id: number) {
-    setColumns(columns.filter((item) => item.getId !== id));
+    setColumns(columns.filter((item) => item.id !== id));
   }
   return (
     <>
@@ -43,12 +43,9 @@ function App() {
         {columns.map((column: column) => {
           return (
             <Column
-              key={column.getId}
-              id={column.getId}
+              key={column.id}
+              instance={column}
               onDelete={handleOnDelete}
-              tittle={column.getTittle}
-              taskList={column.getTaskList}
-              setTaskList={column.setTaskList}
             />
           );
         })}

@@ -1,6 +1,6 @@
 import "./styles/MobileInput.scss";
 import HamburgerButton from "./HamburgerButton";
-import { column } from "./Classes";
+import { column, task } from "./Classes";
 import { useState } from "react";
 
 interface MobileInputProps {

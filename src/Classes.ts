@@ -1,56 +1,59 @@
 export class column {
-  private id: number;
+  private _id: number;
 
-  private tittle: string;
+  private _tittle: string;
 
-  private taskList: Array<task>;
+  private _taskList: Array<task>;
 
   constructor(id: number, tittle: string, taskList: Array<task>) {
-    this.id = id;
-    this.tittle = tittle;
-    this.taskList = taskList;
+    this._id = id;
+    this._tittle = tittle;
+    this._taskList = taskList;
   }
 
-  public get getId() {
-    return this.id;
+  public get id() {
+    return this._id;
   }
-  public get getTittle() {
-    return this.tittle;
+  public get tittle() {
+    return this._tittle;
   }
-  public get getTaskList() {
-    return this.taskList;
+  public set tittle(newTittle: string) {
+    this._tittle = newTittle;
   }
-  public set setTaskList(newList: Array<task>) {
-    this.taskList = newList;
+  public get taskList() {
+    return this._taskList;
+  }
+  public set taskList(newList: Array<task>) {
+    this._taskList = newList;
   }
 }
 
 export class task {
-  private id: number;
+  private _id: number;
 
-  private description: string;
+  private _description: string;
 
-  private shortDesc: string;
+  private _shortDesc: string;
 
   constructor(id: number, desc: string, shortDesc: string) {
-    this.id = id;
-    this.description = desc;
-    this.shortDesc = shortDesc;
+    this._id = id;
+    this._description = desc;
+    this._shortDesc = shortDesc;
   }
 
-  public get getID() {
-    return this.id;
+  public get id() {
+    return this._id;
   }
-  public get getDesc() {
-    return this.description;
+  public get desc() {
+    return this._description;
   }
-  public get getShortDesc() {
-    return this.shortDesc;
+  public set desc(newDesc: string) {
+    this._description = newDesc;
   }
-  public set setDesc(newDesc: string) {
-    this.description = newDesc;
+  public get shortDesc() {
+    return this._shortDesc;
   }
-  public set setShortDesc(newShortDesc: string) {
-    this.shortDesc = newShortDesc;
+  public set shortDesc(newShortDesc: string) {
+    this._shortDesc = newShortDesc;
   }
 }
