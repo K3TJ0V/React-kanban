@@ -4,7 +4,7 @@ import "./Header";
 import Header from "./Header";
 import MobileInput from "./MobileInput";
 import Column from "./Column";
-import { column } from "./Classes";
+import { column, task } from "./Classes";
 
 function App() {
   const [currentwidth, setCurrentWidth] = useState(0);
@@ -19,6 +19,24 @@ function App() {
   function handleOnDelete(id: number) {
     setColumns(columns.filter((item) => item.id !== id));
   }
+
+  function updateColumnTaskList(newList: task[], id: number) {
+    let placeholder: column[] = [];
+    columns.map((item: column) => {
+      if (item.id === id) {
+        item.taskList = newList;
+        placeholder.push(item);
+        return;
+      }
+      placeholder.push(item);
+    });
+    return placeholder;
+  }
+
+  function handleOnAddTask(list: task[], id: number) {
+    setColumns(updateColumnTaskList(list, id));
+  }
+
   return (
     <>
       {currentwidth < 850 ? (
@@ -46,6 +64,7 @@ function App() {
               key={column.id}
               instance={column}
               onDelete={handleOnDelete}
+              handleAddTask={handleOnAddTask}
             />
           );
         })}
