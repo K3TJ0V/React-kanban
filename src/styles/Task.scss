@@ -8,4 +8,7 @@
     color: #fff;
     border: none;
   }
+  &__shortDescription {
+    overflow: scroll;
+  }
 }
