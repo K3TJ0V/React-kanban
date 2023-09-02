@@ -13,7 +13,6 @@
   border-radius: 10px;
   border: 3px solid rgba(255, 0, 0, 0.695);
   background-color: rgb(14, 14, 14);
-  animation: 0.2s forwards;
   &__tittle {
     font-size: 1.5rem;
   }
@@ -40,13 +39,5 @@
       border-radius: 10px;
       box-shadow: 0 0 15px 3px red;
     }
-  }
-}
-@keyframes popup {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
   }
 }

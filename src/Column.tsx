@@ -15,6 +15,10 @@ function Column({ instance, onDelete, handleAddTask }: ColumnProps) {
   const [nextTaskID, setNextTaskID] = useState(1);
   const [currentTaskList, setCurrentTaskList] = useState<task[]>([]);
 
+  function handleTaskDelete(taskID: number) {
+    setCurrentTaskList(currentTaskList.filter((item) => item.id !== taskID));
+  }
+
   return (
     <>
       <section className="column">
@@ -35,7 +39,13 @@ function Column({ instance, onDelete, handleAddTask }: ColumnProps) {
         <div className="column__taskList">
           <hr style={{ width: "99%", margin: 0 }} />
           {currentTaskList.map((taskItem) => {
-            return <Task key={taskItem.id} taskInstance={taskItem} />;
+            return (
+              <Task
+                key={taskItem.id}
+                taskInstance={taskItem}
+                deleting={handleTaskDelete}
+              />
+            );
           })}
         </div>
         <button

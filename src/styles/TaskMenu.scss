@@ -1,0 +1,16 @@
+.taskMenu {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 80vw;
+  height: 65vh;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: 3px solid rgba(255, 0, 0, 0.695);
+  background-color: rgb(14, 14, 14);
+}

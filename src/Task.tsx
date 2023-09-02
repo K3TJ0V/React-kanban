@@ -5,9 +5,10 @@ import { task } from "./Classes";
 
 interface TaskProps {
   taskInstance: task;
+  deleting: (id: number) => void;
 }
 
-function Task({ taskInstance }: TaskProps) {
+function Task({ taskInstance, deleting }: TaskProps) {
   const [taskOptionsVisibility, setTaskOptionsVisibility] = useState(false);
   return (
     <>
@@ -30,7 +31,13 @@ function Task({ taskInstance }: TaskProps) {
           </svg>
         </button>
       </section>
-      {taskOptionsVisibility && <TaskMenu data={taskInstance} />}
+      {taskOptionsVisibility && (
+        <TaskMenu
+          data={taskInstance}
+          visibilityState={setTaskOptionsVisibility}
+          onDelete={deleting}
+        />
+      )}
     </>
   );
 }
