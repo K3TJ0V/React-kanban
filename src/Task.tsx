@@ -1,14 +1,15 @@
 import { useState } from "react";
 import "./styles/Task.scss";
 import TaskMenu from "./TaskMenu";
-import { task } from "./Classes";
+import { task, column } from "./Classes";
 
 interface TaskProps {
   taskInstance: task;
   deleting: (id: number) => void;
+  columns: column[];
 }
 
-function Task({ taskInstance, deleting }: TaskProps) {
+function Task({ taskInstance, deleting, columns }: TaskProps) {
   const [taskOptionsVisibility, setTaskOptionsVisibility] = useState(false);
   return (
     <>
@@ -36,6 +37,7 @@ function Task({ taskInstance, deleting }: TaskProps) {
           data={taskInstance}
           visibilityState={setTaskOptionsVisibility}
           onDelete={deleting}
+          columns={columns}
         />
       )}
     </>

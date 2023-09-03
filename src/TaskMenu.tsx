@@ -1,18 +1,24 @@
 import { useState } from "react";
-import { task } from "./Classes";
+import { column, task } from "./Classes";
 import "./styles/TaskMenu.scss";
 
 interface TaskMenuProps {
   data: task;
   visibilityState: React.Dispatch<React.SetStateAction<boolean>>;
   onDelete: (id: number) => void;
+  columns: column[];
 }
 
-function TaskMenu({ data, visibilityState, onDelete }: TaskMenuProps) {
+function TaskMenu({ data, visibilityState, onDelete, columns }: TaskMenuProps) {
   const [shortDescEdit, setShortDescEdit] = useState(false);
   const [descEdit, setDescEdit] = useState(false);
   const [currentDesc, setCurrentDesc] = useState(data.desc);
   const [currentShortDesc, setCurrentShortDesc] = useState(data.shortDesc);
+
+  function handleTaskMove(item: string) {
+    console.log(item);
+  }
+
   return (
     <section className="taskMenu">
       <article className="taskMenu__shortDesc">
@@ -47,6 +53,17 @@ function TaskMenu({ data, visibilityState, onDelete }: TaskMenuProps) {
           {descEdit ? "Save" : "Edit"}
         </button>
       </article>
+      <select
+        name="columns"
+        id="columns"
+        onChange={(e) => {
+          handleTaskMove(e.target.value);
+        }}
+      >
+        {columns.map((item: column) => {
+          return <option value={item.tittle}>{item.tittle}</option>;
+        })}
+      </select>
       <button
         className="taskMenu__close"
         onClick={() => {

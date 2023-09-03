@@ -65,6 +65,7 @@ function App() {
               instance={column}
               onDelete={handleOnDelete}
               handleAddTask={handleOnAddTask}
+              columns={columns}
             />
           );
         })}
