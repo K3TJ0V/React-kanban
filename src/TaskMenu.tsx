@@ -6,19 +6,23 @@ interface TaskMenuProps {
   data: task;
   visibilityState: React.Dispatch<React.SetStateAction<boolean>>;
   onDelete: (id: number) => void;
+  taskMove: (movedTaskID: task, targetColumnID: number) => void;
   columns: column[];
 }
 
-function TaskMenu({ data, visibilityState, onDelete, columns }: TaskMenuProps) {
+function TaskMenu({
+  data,
+  visibilityState,
+  onDelete,
+  columns,
+  taskMove,
+}: TaskMenuProps) {
   const [shortDescEdit, setShortDescEdit] = useState(false);
   const [descEdit, setDescEdit] = useState(false);
   const [currentDesc, setCurrentDesc] = useState(data.desc);
   const [currentShortDesc, setCurrentShortDesc] = useState(data.shortDesc);
 
-  function handleTaskMove(item: string) {
-    console.log(item);
-  }
-
+  const test = "choose";
   return (
     <section className="taskMenu">
       <article className="taskMenu__shortDesc">
@@ -57,28 +61,37 @@ function TaskMenu({ data, visibilityState, onDelete, columns }: TaskMenuProps) {
         name="columns"
         id="columns"
         onChange={(e) => {
-          handleTaskMove(e.target.value);
+          const columnTarget = e.target.value as unknown as number;
+          taskMove(data, columnTarget);
         }}
       >
+        <option defaultValue={test}>Where to move</option>
         {columns.map((item: column) => {
-          return <option value={item.tittle}>{item.tittle}</option>;
+          return (
+            <option key={item.id} value={item.id}>
+              {item.tittle}
+            </option>
+          );
         })}
       </select>
-      <button
-        className="taskMenu__close"
-        onClick={() => {
-          visibilityState(false);
-        }}
-      >
-        Close
-      </button>
-      <button
-        onClick={() => {
-          onDelete(data.id);
-        }}
-      >
-        Delete
-      </button>
+      <div className="taskMenu__flexButtons">
+        <button
+          className="taskMenu__flexButtons--close"
+          onClick={() => {
+            visibilityState(false);
+          }}
+        >
+          Close
+        </button>
+        <button
+          className="taskMenu__flexButtons--delete"
+          onClick={() => {
+            onDelete(data.id);
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </section>
   );
 }

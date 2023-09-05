@@ -6,10 +6,11 @@ import { task, column } from "./Classes";
 interface TaskProps {
   taskInstance: task;
   deleting: (id: number) => void;
+  taskMove: (movedTaskID: task, targetColumnID: number) => void;
   columns: column[];
 }
 
-function Task({ taskInstance, deleting, columns }: TaskProps) {
+function Task({ taskInstance, deleting, columns, taskMove }: TaskProps) {
   const [taskOptionsVisibility, setTaskOptionsVisibility] = useState(false);
   return (
     <>
@@ -38,6 +39,7 @@ function Task({ taskInstance, deleting, columns }: TaskProps) {
           visibilityState={setTaskOptionsVisibility}
           onDelete={deleting}
           columns={columns}
+          taskMove={taskMove}
         />
       )}
     </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/App.scss";
 import "./Header";
 import Header from "./Header";
@@ -18,6 +18,25 @@ function App() {
   });
   function handleOnDelete(id: number) {
     setColumns(columns.filter((item) => item.id !== id));
+  }
+
+  function test(movedTaskID: task, targetColumnID: number) {
+    let placeholder: column[] = [];
+    columns.map((item) => {
+      if (item.id == targetColumnID) {
+        let newList = item.taskList;
+        newList.push(movedTaskID);
+        item.taskList = newList;
+        placeholder.push(item);
+        return;
+      }
+      placeholder.push(item);
+    });
+    return placeholder;
+  }
+
+  function handleTaskMove(movedTaskID: task, targetColumnID: number) {
+    setColumns(test(movedTaskID, targetColumnID));
   }
 
   function updateColumnTaskList(newList: task[], id: number) {
@@ -66,6 +85,7 @@ function App() {
               onDelete={handleOnDelete}
               handleAddTask={handleOnAddTask}
               columns={columns}
+              taskMove={handleTaskMove}
             />
           );
         })}

@@ -8,13 +8,22 @@ interface ColumnProps {
   instance: column;
   onDelete: (id: number) => void;
   handleAddTask: (list: task[], id: number) => void;
+  taskMove: (movedTaskID: task, targetColumnID: number) => void;
   columns: column[];
 }
 
-function Column({ instance, onDelete, handleAddTask, columns }: ColumnProps) {
+function Column({
+  instance,
+  onDelete,
+  handleAddTask,
+  columns,
+  taskMove,
+}: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
   const [nextTaskID, setNextTaskID] = useState(1);
-  const [currentTaskList, setCurrentTaskList] = useState<task[]>([]);
+  const [currentTaskList, setCurrentTaskList] = useState<task[]>(
+    instance.taskList
+  );
 
   function handleTaskDelete(taskID: number) {
     setCurrentTaskList(currentTaskList.filter((item) => item.id !== taskID));
@@ -46,6 +55,7 @@ function Column({ instance, onDelete, handleAddTask, columns }: ColumnProps) {
                 taskInstance={taskItem}
                 deleting={handleTaskDelete}
                 columns={columns}
+                taskMove={taskMove}
               />
             );
           })}
