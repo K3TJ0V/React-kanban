@@ -3,39 +3,49 @@ import { column, task } from "./Classes";
 import "./styles/TaskMenu.scss";
 
 interface TaskMenuProps {
-  data: task;
+  taskInstance: task;
   visibilityState: React.Dispatch<React.SetStateAction<boolean>>;
   onDelete: (id: number) => void;
-  taskMove: (movedTaskID: task, targetColumnID: number) => void;
+  taskMove: (
+    movedTaskID: task,
+    targetColumnID: number,
+    columnInstance: column
+  ) => void;
   columns: column[];
+  columnInstance: column;
 }
 
 function TaskMenu({
-  data,
+  taskInstance,
   visibilityState,
   onDelete,
   columns,
   taskMove,
+  columnInstance,
 }: TaskMenuProps) {
   const [shortDescEdit, setShortDescEdit] = useState(false);
   const [descEdit, setDescEdit] = useState(false);
-  const [currentDesc, setCurrentDesc] = useState(data.desc);
-  const [currentShortDesc, setCurrentShortDesc] = useState(data.shortDesc);
+  const [currentDesc, setCurrentDesc] = useState(taskInstance.desc);
+  const [currentShortDesc, setCurrentShortDesc] = useState(
+    taskInstance.shortDesc
+  );
 
-  const test = "choose";
   return (
     <section className="taskMenu">
       <article className="taskMenu__shortDesc">
         {shortDescEdit ? (
-          <ShortDescEditing item={data} setShortDesc={setCurrentShortDesc} />
+          <ShortDescEditing
+            item={taskInstance}
+            setShortDesc={setCurrentShortDesc}
+          />
         ) : (
-          data.shortDesc
+          taskInstance.shortDesc
         )}
         <button
           className="taskMenu__shortDesc--editButton"
           onClick={() => {
             setShortDescEdit(!shortDescEdit);
-            data.shortDesc = currentShortDesc;
+            taskInstance.shortDesc = currentShortDesc;
           }}
         >
           {shortDescEdit ? "Save" : "Edit"}
@@ -43,15 +53,15 @@ function TaskMenu({
       </article>
       <article className="taskMenu__desc">
         {descEdit ? (
-          <DescEditing item={data} setDesc={setCurrentDesc} />
+          <DescEditing item={taskInstance} setDesc={setCurrentDesc} />
         ) : (
-          data.desc
+          taskInstance.desc
         )}
         <button
           className="taskMenu__desc--editButton"
           onClick={() => {
             setDescEdit(!descEdit);
-            data.desc = currentDesc;
+            taskInstance.desc = currentDesc;
           }}
         >
           {descEdit ? "Save" : "Edit"}
@@ -62,10 +72,11 @@ function TaskMenu({
         id="columns"
         onChange={(e) => {
           const columnTarget = e.target.value as unknown as number;
-          taskMove(data, columnTarget);
+          taskMove(taskInstance, columnTarget, columnInstance);
+          visibilityState(false);
         }}
       >
-        <option defaultValue={test}>Where to move</option>
+        <option defaultValue={""}>Where to move</option>
         {columns.map((item: column) => {
           return (
             <option key={item.id} value={item.id}>
@@ -86,7 +97,7 @@ function TaskMenu({
         <button
           className="taskMenu__flexButtons--delete"
           onClick={() => {
-            onDelete(data.id);
+            onDelete(taskInstance.id);
           }}
         >
           Delete
@@ -104,8 +115,8 @@ function ShortDescEditing({ item, setShortDesc }: ShortDescEditingProps) {
     <article>
       <input
         type="text"
-        name=""
-        id=""
+        name="shortDesc"
+        id="shortDesc"
         value={item.shortDesc}
         onChange={(e) => {
           setShortDesc(e.target.value);
@@ -124,8 +135,8 @@ function DescEditing({ item, setDesc }: DescEditingProps) {
     <article>
       <input
         type="text"
-        name=""
-        id=""
+        name="desc"
+        id="desc"
         value={item.desc}
         onChange={(e) => {
           setDesc(e.target.value);

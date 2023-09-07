@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./styles/App.scss";
 import "./Header";
 import Header from "./Header";
@@ -11,49 +11,39 @@ function App() {
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
   const [columns, setColumns] = useState<Array<column>>([]);
   const [columnNextID, setColumnNextID] = useState(1);
+  const [nextTaskID, setNextTaskID] = useState(1);
 
   window.addEventListener("resize", (e: Event) => {
     const target = e.currentTarget as Window;
     setCurrentWidth(target.innerWidth);
   });
+
   function handleOnDelete(id: number) {
     setColumns(columns.filter((item) => item.id !== id));
   }
 
-  function test(movedTaskID: task, targetColumnID: number) {
+  function handleTaskMove(
+    movedTask: task,
+    targetColumnID: number,
+    columnInstance: column
+  ) {
     let placeholder: column[] = [];
     columns.map((item) => {
+      if (item.id == columnInstance.id) {
+        item.taskList = item.taskList.filter(
+          (Task) => Task.id !== movedTask.id
+        );
+        placeholder.push(item);
+        return;
+      }
       if (item.id == targetColumnID) {
-        let newList = item.taskList;
-        newList.push(movedTaskID);
-        item.taskList = newList;
+        item.taskList = [...item.taskList, movedTask];
         placeholder.push(item);
         return;
       }
       placeholder.push(item);
     });
-    return placeholder;
-  }
-
-  function handleTaskMove(movedTaskID: task, targetColumnID: number) {
-    setColumns(test(movedTaskID, targetColumnID));
-  }
-
-  function updateColumnTaskList(newList: task[], id: number) {
-    let placeholder: column[] = [];
-    columns.map((item: column) => {
-      if (item.id === id) {
-        item.taskList = newList;
-        placeholder.push(item);
-        return;
-      }
-      placeholder.push(item);
-    });
-    return placeholder;
-  }
-
-  function handleOnAddTask(list: task[], id: number) {
-    setColumns(updateColumnTaskList(list, id));
+    setColumns(placeholder);
   }
 
   return (
@@ -83,9 +73,10 @@ function App() {
               key={column.id}
               instance={column}
               onDelete={handleOnDelete}
-              handleAddTask={handleOnAddTask}
               columns={columns}
               taskMove={handleTaskMove}
+              nextTaskID={nextTaskID}
+              setNextTaskID={setNextTaskID}
             />
           );
         })}

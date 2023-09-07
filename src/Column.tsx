@@ -7,28 +7,32 @@ import Task from "./Task";
 interface ColumnProps {
   instance: column;
   onDelete: (id: number) => void;
-  handleAddTask: (list: task[], id: number) => void;
-  taskMove: (movedTaskID: task, targetColumnID: number) => void;
+  taskMove: (
+    movedTaskID: task,
+    targetColumnID: number,
+    columnInstance: column
+  ) => void;
   columns: column[];
+  nextTaskID: number;
+  setNextTaskID: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function Column({
   instance,
   onDelete,
-  handleAddTask,
   columns,
   taskMove,
+  nextTaskID,
+  setNextTaskID,
 }: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
-  const [nextTaskID, setNextTaskID] = useState(1);
-  const [currentTaskList, setCurrentTaskList] = useState<task[]>(
-    instance.taskList
-  );
 
   function handleTaskDelete(taskID: number) {
-    setCurrentTaskList(currentTaskList.filter((item) => item.id !== taskID));
+    // setCurrentTaskList(currentTaskList.filter((item) => item.id !== taskID));
+    let list = instance.taskList;
+    list.filter((item) => item.id !== taskID);
+    instance.taskList = list;
   }
-
   return (
     <>
       <section className="column">
@@ -36,19 +40,18 @@ function Column({
         <button
           className="column__add"
           onClick={() => {
-            setCurrentTaskList([
-              ...currentTaskList,
+            instance.taskList = [
+              ...instance.taskList,
               new task(nextTaskID, "test", "test"),
-            ]);
+            ];
             setNextTaskID(nextTaskID + 1);
-            handleAddTask(currentTaskList, instance.id);
           }}
         >
           ADD
         </button>
         <div className="column__taskList">
           <hr style={{ width: "99%", margin: 0 }} />
-          {currentTaskList.map((taskItem) => {
+          {instance.taskList.map((taskItem) => {
             return (
               <Task
                 key={taskItem.id}
@@ -56,6 +59,7 @@ function Column({
                 deleting={handleTaskDelete}
                 columns={columns}
                 taskMove={taskMove}
+                columnInstance={instance}
               />
             );
           })}
