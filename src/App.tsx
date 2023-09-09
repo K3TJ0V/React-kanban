@@ -21,7 +21,18 @@ function App() {
   function handleOnDelete(id: number) {
     setColumns(columns.filter((item) => item.id !== id));
   }
-
+  function handleTaskDelete(newTaskList: task[], colID: number) {
+    let placeholder: column[] = [];
+    columns.map((item) => {
+      if (colID === item.id) {
+        item.taskList = newTaskList;
+        placeholder.push(item);
+        return;
+      }
+      placeholder.push(item);
+    });
+    setColumns(placeholder);
+  }
   function handleTaskMove(
     movedTask: task,
     targetColumnID: number,
@@ -70,8 +81,9 @@ function App() {
         {columns.map((column: column) => {
           return (
             <Column
+              deleteRerender={handleTaskDelete}
               key={column.id}
-              instance={column}
+              colInstance={column}
               onDelete={handleOnDelete}
               columns={columns}
               taskMove={handleTaskMove}

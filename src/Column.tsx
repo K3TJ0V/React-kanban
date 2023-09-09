@@ -1,12 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./styles/Column.scss";
 import Agreement from "./Agreement";
 import { task, column } from "./Classes";
 import Task from "./Task";
+import TaskCreator from "./TaskCreator";
 
 interface ColumnProps {
-  instance: column;
+  colInstance: column;
   onDelete: (id: number) => void;
+  deleteRerender: (newList: task[], colID: number) => void;
   taskMove: (
     movedTaskID: task,
     targetColumnID: number,
@@ -18,48 +20,54 @@ interface ColumnProps {
 }
 
 function Column({
-  instance,
+  colInstance,
   onDelete,
+  deleteRerender,
   columns,
   taskMove,
   nextTaskID,
   setNextTaskID,
 }: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
+  const [creatorVisibility, setCreatorVisibility] = useState(false);
 
   function handleTaskDelete(taskID: number) {
-    // setCurrentTaskList(currentTaskList.filter((item) => item.id !== taskID));
-    let list = instance.taskList;
-    list.filter((item) => item.id !== taskID);
-    instance.taskList = list;
+    colInstance.taskList = colInstance.taskList.filter(
+      (item) => item.id !== taskID
+    );
+    deleteRerender(colInstance.taskList, colInstance.id);
   }
   return (
     <>
       <section className="column">
-        <h2 className="column__h2">{instance.tittle} </h2>
+        <h2 className="column__h2">{colInstance.tittle} </h2>
         <button
           className="column__add"
           onClick={() => {
-            instance.taskList = [
-              ...instance.taskList,
-              new task(nextTaskID, "test", "test"),
-            ];
-            setNextTaskID(nextTaskID + 1);
+            setCreatorVisibility(!creatorVisibility);
           }}
         >
           ADD
         </button>
+        {creatorVisibility && (
+          <TaskCreator
+            colInstance={colInstance}
+            nextTaskID={nextTaskID}
+            setNextTaskID={setNextTaskID}
+            visibility={setCreatorVisibility}
+          />
+        )}
         <div className="column__taskList">
           <hr style={{ width: "99%", margin: 0 }} />
-          {instance.taskList.map((taskItem) => {
+          {colInstance.taskList.map((taskItem) => {
             return (
               <Task
                 key={taskItem.id}
                 taskInstance={taskItem}
-                deleting={handleTaskDelete}
+                onDelete={handleTaskDelete}
                 columns={columns}
                 taskMove={taskMove}
-                columnInstance={instance}
+                colInstance={colInstance}
               />
             );
           })}
@@ -74,9 +82,9 @@ function Column({
         </button>
         {showPopup && (
           <Agreement
-            id={instance.id}
+            id={colInstance.id}
             onYes={() => {
-              onDelete(instance.id);
+              onDelete(colInstance.id);
             }}
             onNo={setShowPopup}
           />

@@ -12,7 +12,7 @@ interface TaskMenuProps {
     columnInstance: column
   ) => void;
   columns: column[];
-  columnInstance: column;
+  colInstance: column;
 }
 
 function TaskMenu({
@@ -21,7 +21,7 @@ function TaskMenu({
   onDelete,
   columns,
   taskMove,
-  columnInstance,
+  colInstance,
 }: TaskMenuProps) {
   const [shortDescEdit, setShortDescEdit] = useState(false);
   const [descEdit, setDescEdit] = useState(false);
@@ -72,17 +72,21 @@ function TaskMenu({
         id="columns"
         onChange={(e) => {
           const columnTarget = e.target.value as unknown as number;
-          taskMove(taskInstance, columnTarget, columnInstance);
+          taskMove(taskInstance, columnTarget, colInstance);
           visibilityState(false);
         }}
       >
         <option defaultValue={""}>Where to move</option>
         {columns.map((item: column) => {
-          return (
-            <option key={item.id} value={item.id}>
-              {item.tittle}
-            </option>
-          );
+          if (item.id === colInstance.id) {
+            return;
+          } else {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.tittle}
+              </option>
+            );
+          }
         })}
       </select>
       <div className="taskMenu__flexButtons">

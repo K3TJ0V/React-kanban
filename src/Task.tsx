@@ -5,22 +5,22 @@ import { task, column } from "./Classes";
 
 interface TaskProps {
   taskInstance: task;
-  deleting: (id: number) => void;
+  onDelete: (id: number) => void;
   taskMove: (
     movedTaskID: task,
     targetColumnID: number,
     columnInstance: column
   ) => void;
   columns: column[];
-  columnInstance: column;
+  colInstance: column;
 }
 
 function Task({
   taskInstance,
-  deleting,
+  onDelete,
   columns,
   taskMove,
-  columnInstance,
+  colInstance,
 }: TaskProps) {
   const [taskOptionsVisibility, setTaskOptionsVisibility] = useState(false);
   return (
@@ -48,10 +48,10 @@ function Task({
         <TaskMenu
           taskInstance={taskInstance}
           visibilityState={setTaskOptionsVisibility}
-          onDelete={deleting}
+          onDelete={onDelete}
           columns={columns}
           taskMove={taskMove}
-          columnInstance={columnInstance}
+          colInstance={colInstance}
         />
       )}
     </>
