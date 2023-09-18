@@ -4,7 +4,8 @@
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
-  width: 80vw;
+  min-width: 260px;
+  max-width: 300px;
   height: 65vh;
   z-index: 3;
   top: 50%;
@@ -13,4 +14,122 @@
   border-radius: 10px;
   border: 3px solid rgba(255, 0, 0, 0.695);
   background-color: rgb(14, 14, 14);
+  &__shortDesc,
+  &__desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__desc {
+    &--p {
+      margin: 0;
+      max-height: 110px;
+      overflow: scroll;
+      max-width: 240px;
+      overflow-wrap: break-word;
+    }
+    &--h4 {
+      margin: 0 0 15px 0;
+    }
+    &--saveButton,
+    &--editButton {
+      padding: 5px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      background: none;
+      border: none;
+      border-radius: 10px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    &--saveButton {
+      box-shadow: 0 0 5px 3px rgb(0, 203, 0);
+      color: rgb(0, 192, 0);
+    }
+    &--editButton {
+      color: rgb(0, 140, 255);
+      box-shadow: 0 0 5px 2px rgb(0, 140, 255);
+    }
+  }
+  &__shortDesc {
+    &--p {
+      margin: 0;
+    }
+    &--h4 {
+      margin: 0 0 15px 0;
+    }
+    &--saveButton,
+    &--editButton {
+      padding: 5px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      background: none;
+      border: none;
+      border-radius: 10px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    &--saveButton {
+      box-shadow: 0 0 5px 3px rgb(0, 203, 0);
+      color: rgb(0, 192, 0);
+    }
+    &--editButton {
+      color: rgb(0, 140, 255);
+      box-shadow: 0 0 5px 2px rgb(0, 140, 255);
+    }
+  }
+  &__shortDescEditor {
+    &--descInput {
+      background: none;
+      box-shadow: 0 0 3px 1px rgb(203, 0, 0);
+      border: none;
+      padding: 5px;
+      color: #fff;
+    }
+  }
+  &__descEditor {
+    &--taskarea {
+      height: 100px;
+      width: 230px;
+      background: none;
+      box-shadow: 0 0 3px 1px rgb(203, 0, 0);
+      border: none;
+      padding: 5px;
+      color: #fff;
+    }
+  }
+  &__flexButtons {
+    display: flex;
+    gap: 10px;
+    &--delete,
+    &--close {
+      padding: 3px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      background: none;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    &--delete {
+      color: rgba(219, 0, 0, 0.875);
+      box-shadow: 0 0 5px 2px rgb(255, 0, 0);
+    }
+    &--close {
+      color: rgb(0, 140, 255);
+      box-shadow: 0 0 5px 2px rgb(0, 140, 255);
+    }
+  }
+  &__select {
+    background: none;
+    border: none;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0 0 3px 1px rgb(203, 0, 0);
+    padding: 5px;
+    border-radius: 4px;
+  }
+  &__select option {
+    color: black;
+  }
 }

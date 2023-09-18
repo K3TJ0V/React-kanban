@@ -21,6 +21,7 @@ function TaskCreator({
   return (
     <section className="taskCreator">
       <form
+        className="taskCreator__form"
         onSubmit={(e) => {
           e.preventDefault();
           let newTask = new task(nextTaskID, currentDesc, currentShortDesc);
@@ -30,25 +31,38 @@ function TaskCreator({
         }}
       >
         <input
+          className="taskCreator__form--shortDesc"
           type="text"
           name="shortDesc"
           id="shortDesc"
           required
+          placeholder="short description"
           onChange={(e) => {
             setCurrentShortDesc(e.target.value);
           }}
         />
         <textarea
+          className="taskCreator__form--desc"
           name="desc"
           id="desc"
-          required
+          placeholder="description"
           onChange={(e) => {
             setCurrentDesc(e.target.value);
           }}
         />
-        <button className="column_add" type="submit">
-          ADD
-        </button>
+        <div className="taskCreator__buttonsFlex">
+          <button className="taskCreator__buttonsFlex--add" type="submit">
+            ADD
+          </button>
+          <button
+            className="taskCreator__buttonsFlex--close"
+            onClick={() => {
+              visibility(false);
+            }}
+          >
+            CLOSE
+          </button>
+        </div>
       </form>
     </section>
   );

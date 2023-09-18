@@ -1,0 +1,61 @@
+.taskCreator {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 260px;
+  max-width: 300px;
+  height: 65vh;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: 3px solid rgba(255, 0, 0, 0.695);
+  background-color: rgb(14, 14, 14);
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &--shortDesc {
+      padding: 5px;
+      color: #fff;
+      border: none;
+      background-color: #ffffff00;
+      box-shadow: 0 0 3px 1px rgb(203, 0, 0);
+    }
+    &--desc {
+      padding: 5px;
+      color: #fff;
+      min-height: 100px;
+      border: none;
+      background-color: #ffffff00;
+      box-shadow: 0 0 3px 1px rgb(203, 0, 0);
+    }
+  }
+  &__buttonsFlex {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    &--add,
+    &--close {
+      padding: 3px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      background: none;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    &--add {
+      color: rgb(0, 192, 0);
+      box-shadow: 0 0 5px 2px rgb(0, 203, 0);
+    }
+    &--close {
+      color: rgb(0, 105, 241);
+      box-shadow: 0 0 5px 2px rgb(0, 105, 241);
+    }
+  }
+}

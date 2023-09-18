@@ -33,41 +33,68 @@ function TaskMenu({
   return (
     <section className="taskMenu">
       <article className="taskMenu__shortDesc">
+        <h4 className="taskMenu__shortDesc--h4">Short description</h4>
         {shortDescEdit ? (
           <ShortDescEditing
             item={taskInstance}
             setShortDesc={setCurrentShortDesc}
           />
         ) : (
-          taskInstance.shortDesc
+          <p className="taskMenu__shortDesc--p">{taskInstance.shortDesc}</p>
         )}
-        <button
-          className="taskMenu__shortDesc--editButton"
-          onClick={() => {
-            setShortDescEdit(!shortDescEdit);
-            taskInstance.shortDesc = currentShortDesc;
-          }}
-        >
-          {shortDescEdit ? "Save" : "Edit"}
-        </button>
+        {shortDescEdit ? (
+          <button
+            className="taskMenu__shortDesc--saveButton"
+            onClick={() => {
+              setShortDescEdit(!shortDescEdit);
+              taskInstance.shortDesc = currentShortDesc;
+            }}
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            className="taskMenu__shortDesc--editButton"
+            onClick={() => {
+              setShortDescEdit(!shortDescEdit);
+              taskInstance.shortDesc = currentShortDesc;
+            }}
+          >
+            Edit
+          </button>
+        )}
       </article>
       <article className="taskMenu__desc">
+        <h4 className="taskMenu__desc--h4">Description</h4>
         {descEdit ? (
           <DescEditing item={taskInstance} setDesc={setCurrentDesc} />
         ) : (
-          taskInstance.desc
+          <p className="taskMenu__desc--p">{taskInstance.desc}</p>
         )}
-        <button
-          className="taskMenu__desc--editButton"
-          onClick={() => {
-            setDescEdit(!descEdit);
-            taskInstance.desc = currentDesc;
-          }}
-        >
-          {descEdit ? "Save" : "Edit"}
-        </button>
+        {descEdit ? (
+          <button
+            className="taskMenu__desc--saveButton"
+            onClick={() => {
+              setDescEdit(!descEdit);
+              taskInstance.desc = currentDesc;
+            }}
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            className="taskMenu__desc--editButton"
+            onClick={() => {
+              setDescEdit(!descEdit);
+              taskInstance.desc = currentDesc;
+            }}
+          >
+            Edit
+          </button>
+        )}
       </article>
       <select
+        className="taskMenu__select"
         name="columns"
         id="columns"
         onChange={(e) => {
@@ -116,8 +143,9 @@ interface ShortDescEditingProps {
 }
 function ShortDescEditing({ item, setShortDesc }: ShortDescEditingProps) {
   return (
-    <article>
+    <article className="taskMenu__shortDescEditor">
       <input
+        className="taskMenu__shortDescEditor--descInput"
         type="text"
         name="shortDesc"
         id="shortDesc"
@@ -136,9 +164,9 @@ interface DescEditingProps {
 }
 function DescEditing({ item, setDesc }: DescEditingProps) {
   return (
-    <article>
-      <input
-        type="text"
+    <article className="taskMenu__descEditor">
+      <textarea
+        className="taskMenu__descEditor--taskarea"
         name="desc"
         id="desc"
         value={item.desc}

@@ -1,6 +1,17 @@
 @import "./variables.scss";
 @import "normalize.css";
-
+::-webkit-scrollbar {
+  background-color: rgba(128, 128, 128, 0.144);
+  border-radius: 20px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(128, 128, 128);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-corner {
+  display: none;
+}
 body {
   height: 100vh;
   background: $backgroundColor;
@@ -12,6 +23,7 @@ body {
   display: flex;
   gap: 40px;
   overflow: scroll;
+  overflow-y: hidden;
   height: 75vh;
   margin: 20px 15px;
   padding: 20px;
