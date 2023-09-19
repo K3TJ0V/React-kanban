@@ -5,9 +5,10 @@ import Header from "./Header";
 import MobileInput from "./MobileInput";
 import Column from "./Column";
 import { column, task } from "./Classes";
+import DesktopHeader from "./DesktopHeader";
 
 function App() {
-  const [currentwidth, setCurrentWidth] = useState(0);
+  const [currentwidth, setCurrentWidth] = useState(window.innerWidth);
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
   const [columns, setColumns] = useState<Array<column>>([]);
   const [columnNextID, setColumnNextID] = useState(1);
@@ -64,7 +65,14 @@ function App() {
           setHamburger={setHamburgerVisibility}
           hamburger={hamburgerVisibility}
         />
-      ) : null}
+      ) : (
+        <DesktopHeader
+          setColumns={setColumns}
+          columnList={columns}
+          currentID={columnNextID}
+          setCurrentID={setColumnNextID}
+        />
+      )}
 
       {hamburgerVisibility && (
         <MobileInput

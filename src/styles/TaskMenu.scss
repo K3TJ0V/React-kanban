@@ -54,6 +54,8 @@
   &__shortDesc {
     &--p {
       margin: 0;
+      max-width: 80%;
+      overflow-wrap: break-word;
     }
     &--h4 {
       margin: 0 0 15px 0;

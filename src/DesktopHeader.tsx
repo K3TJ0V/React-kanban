@@ -1,25 +1,20 @@
-import "./styles/MobileInput.scss";
-import HamburgerButton from "./HamburgerButton";
+import "./styles/DesktopHeader.scss";
 import { column } from "./Classes";
 import { useState } from "react";
 
-interface MobileInputProps {
-  hamburger: boolean;
-  columnList: column[];
-  setHamburger: React.Dispatch<React.SetStateAction<boolean>>;
+interface DesktopHeaderProps {
   setColumns: React.Dispatch<React.SetStateAction<column[]>>;
   currentID: number;
   setCurrentID: React.Dispatch<React.SetStateAction<number>>;
+  columnList: column[];
 }
 
-function MobileInput({
-  hamburger,
-  columnList,
+function DesktopHeader({
+  setColumns,
   currentID,
   setCurrentID,
-  setHamburger,
-  setColumns,
-}: MobileInputProps) {
+  columnList,
+}: DesktopHeaderProps) {
   const [currentText, setCurrentText] = useState("");
 
   function handleEnter(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -36,26 +31,24 @@ function MobileInput({
   }
 
   return (
-    <aside className="asideMobile">
-      <div className="asideMobile__hamburger">
-        <HamburgerButton setHamburger={setHamburger} hamburger={hamburger} />
-      </div>
-      <label>
+    <div className="flexHeader">
+      <header className="desktopHeader">
         <input
-          className="asideMobile__input"
-          type="text"
-          name="col"
-          id="col"
           value={currentText}
+          type="text"
+          name="column"
+          id="column"
+          className="desktopHeader__input"
+          placeholder="Name your column"
           onChange={(e) => {
             setCurrentText(e.target.value);
           }}
           onKeyDown={handleEnter}
-          placeholder="Name your column"
         />
-      </label>
-    </aside>
+        <h1 className="desktopHeader__h1">Welcome back USER</h1>
+      </header>
+    </div>
   );
 }
 
-export default MobileInput;
+export default DesktopHeader;
