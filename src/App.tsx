@@ -39,23 +39,17 @@ function App() {
     targetColumnID: number,
     columnInstance: column
   ) {
-    let placeholder: column[] = [];
-    columns.map((item) => {
+    columns.forEach((item) => {
       if (item.id == columnInstance.id) {
         item.taskList = item.taskList.filter(
           (Task) => Task.id !== movedTask.id
         );
-        placeholder.push(item);
-        return;
       }
       if (item.id == targetColumnID) {
         item.taskList = [...item.taskList, movedTask];
-        placeholder.push(item);
-        return;
       }
-      placeholder.push(item);
     });
-    setColumns(placeholder);
+    setColumns([...columns]);
   }
 
   return (
