@@ -6,6 +6,7 @@ import MobileInput from "./MobileInput";
 import Column from "./Column";
 import { column, task } from "./Classes";
 import DesktopHeader from "./DesktopHeader";
+import useSWR from "swr";
 
 function App() {
   const [currentwidth, setCurrentWidth] = useState(window.innerWidth);
@@ -13,6 +14,13 @@ function App() {
   const [columns, setColumns] = useState<Array<column>>([]);
   const [columnNextID, setColumnNextID] = useState(1);
   const [nextTaskID, setNextTaskID] = useState(1);
+
+  const fetcher = (url : string) => fetch(url, {method: 'POST'}).then(res => res.json());
+  const {data, error} = useSWR('http://localhost:6050', fetcher);
+    if(error){
+      console.log(error);
+    }
+    console.log(data);
 
   window.addEventListener("resize", (e: Event) => {
     const target = e.currentTarget as Window;
