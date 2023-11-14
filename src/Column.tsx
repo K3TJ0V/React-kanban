@@ -5,6 +5,7 @@ import { task, column } from "./Classes";
 import Task from "./Task";
 import TaskCreator from "./TaskCreator";
 
+
 interface ColumnProps {
   colInstance: column;
   onDelete: (id: number) => void;
