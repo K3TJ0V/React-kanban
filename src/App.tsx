@@ -53,7 +53,7 @@ function App() {
     setColumns([...columns]);
   }
 
-  return <LoginForm/>
+  return <LoginForm />
   // (
   //   <>
   //     {currentwidth < 850 ? (

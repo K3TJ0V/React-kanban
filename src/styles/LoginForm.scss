@@ -1,23 +1,76 @@
 .form{
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.522);
+    background-color: rgb(13, 13, 13);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 40px;    
+    padding: 30px;    
     width: 50vw;
     max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 0 20px 5px rgb(203, 0, 0);
+    box-shadow: 0 0 10px 2px rgb(203, 0, 0);
     border-radius: 10px;
-    &__login, &__password{
-        padding: 5px;
-        color: #fff;
-        background: none;
-        border: 1px solid rgba(255, 0, 0, 0.695);
-        border-radius: 10px;
+    &__buttonFlex{
+        display: flex;
+        gap: 20px;
+        padding: 10px;
+        &--loginButton, &--signupButton{
+            padding: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: none;
+            border: none;
+            border-radius: 10px;
+        }
+        &--loginButton{
+            box-shadow: 0 0 5px 2px rgb(16, 190, 16);
+            color: rgb(18, 187, 18);
+        }
+        &--signupButton{
+            color: rgb(13, 121, 209);
+            box-shadow: 0 0 5px 2px rgb(18, 141, 243);
+        }
+    }
+    &__loginPosition{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &--label{
+            background-color: rgba(13, 13, 13);
+            padding: 0 2px;
+            position: absolute;
+            top: 23px;
+            left: 10px;
+            transition: all 0.2s;
+        }
+        &--login{
+            padding: 5px;
+            color: #fff;
+            background: none;
+            border: 1px solid rgba(255, 0, 0, 0.695);
+            border-radius: 10px;
+        }
+    }
+    &__passwordPosition{
+        position: relative;
+        &--label{
+            background-color: rgba(13, 13, 13);
+            padding: 0 2px;
+            position: absolute;
+            top: 23px;
+            left: 10px;
+            transition: all 0.2s;
+        }
+        &--password{
+            padding: 5px;
+            color: #fff;
+            background: none;
+            border: 1px solid rgba(255, 0, 0, 0.695);
+            border-radius: 10px;
+        }
     }
 }
