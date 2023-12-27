@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./styles/LoginForm.scss";
 
 function LoginForm(){
@@ -6,6 +7,11 @@ function LoginForm(){
     const loginLabel = useRef<HTMLLabelElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordLabel = useRef<HTMLLabelElement>(null);
+    const navigate = useNavigate();
+    
+    function handleLogIn(){
+        navigate("/logged");
+    }
     
     function handleLoginFocus(){
         loginLabel.current!.style.transform = 'translate(-5px, -15px)';
@@ -27,7 +33,7 @@ function LoginForm(){
         passwordLabel.current!.style.transform = 'translate(0, 0)';
     }
     return(
-        <form  className="form" action="/login">
+        <form method="post" className="form">
             <div className="form__loginPosition">
             <label ref={loginLabel} className="form__loginPosition--label" htmlFor="login">Login</label><br/>
             <input onFocus={handleLoginFocus} onBlur={handleLoginBlur} ref={loginRef} type="text" name="login" id="login" className="form__loginPosition--login" />
@@ -37,12 +43,11 @@ function LoginForm(){
             <input onFocus={handlePasswordFocus} onBlur={handlePasswordBlur} ref={passwordRef} type="password" name="password" id="password" className="form__passwordPosition--password" />
             </div>
             <div className="form__buttonFlex">
-            <button className="form__buttonFlex--loginButton">Log in</button>
+            <button className="form__buttonFlex--loginButton" onClick={handleLogIn}>Log in</button>
             <button className="form__buttonFlex--signupButton">Sign up</button>
             </div>
         </form>
     )
-}
-
-
-export default LoginForm;
+  }
+  
+  export default LoginForm;
