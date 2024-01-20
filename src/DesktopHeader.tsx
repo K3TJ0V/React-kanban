@@ -1,7 +1,6 @@
 import "./styles/DesktopHeader.scss";
 import { column } from "./Classes";
 import { useState } from "react";
-import useSWRMutation from "swr/mutation";
 
 interface DesktopHeaderProps {
   setColumns: React.Dispatch<React.SetStateAction<column[]>>;
@@ -34,21 +33,6 @@ function DesktopHeader({
       setColumns([...columnList, newColumn]);
       setCurrentID(currentID + 1);
       setCurrentText("");
-
-      let data = {
-        id: currentID,
-        tittle: currentText.trim(),
-        taskList: []
-      }
-      await fetch("http://localhost:6050/column/add", {
-         method:'POST',
-         body: JSON.stringify(data),
-         headers: {"Content-Type": "application/json"},
-        })
-        .then(res => res.json())
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-        
   }}
   // http://localhost:6050/addcolumn
 
