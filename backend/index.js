@@ -38,6 +38,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post("/user/create", async (req,res) =>{
+
+})
+
 app.post("/user/create", async (req, res) => {
   [login, password] = [req.body.login, req.body.password];
   const query = await client.query(

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/LoginForm.scss";
+import "./styles/LoginRegisterForm.scss";
 import { fetchPost } from "./fetchMethods";
 
 function LoginForm() {
@@ -19,7 +19,6 @@ function LoginForm() {
         login: form.login.value,
         password: form.password.value
     };
-    fetchPost("/user/create", data);
   }
   function handleLoginFocus() {
     loginLabel.current!.style.transform = "translate(-5px, -15px)";
@@ -42,7 +41,6 @@ function LoginForm() {
   }
   return (
     <form
-      method="post"
       onSubmit={(e) => {
         handleOdSubmit(e);
       }}
