@@ -1,41 +1,48 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./styles/LoginRegisterForm.scss";
+import {handleOnBlur, handleOnFocus} from "./inputAnimations";
+import { useNavigate } from "react-router-dom";
+import { fetchPost } from "./fetchMethods";
+import { popup } from './popup.ts';
 
 function RegisterForm() {
   const loginRef = useRef<HTMLInputElement>(null);
   const loginLabel = useRef<HTMLLabelElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordLabel = useRef<HTMLLabelElement>(null);
+  const navigate = useNavigate();
+  const [popupText, setPopupText] = useState('test');
+  const popupRef = useRef<HTMLElement>(null);
 
-  function handleOnFocus( 
-    labelRef: React.RefObject<HTMLLabelElement>
-  ) {
-    if (labelRef.current?.htmlFor === "login") {
-      labelRef.current!.style.transform = "translate(-5px, -15px)";
-    } else {
-      labelRef.current!.style.transform = "translate(-5px, -15px)";
+  async function handleOdSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();    
+    const form = e.target as HTMLFormElement
+    const data = {
+        login: form.login.value, 
+        password: form.password.value
+    };
+    if(data.login.length < 8){
+      popup({type:'error', message:'login is too short (min. 8 characters)', popupRef, setPopupText});
+      return
+    }else if(data.password.length < 8){
+      popup({type:'error', message:'password is too short (min. 8 characters)', popupRef, setPopupText});
+      return
     }
-  }
-  function handleOnBlur(
-    labelRef: React.RefObject<HTMLLabelElement>,
-    inputRef: React.RefObject<HTMLInputElement>
-  ) {
-    if (inputRef.current?.name === "login") {
-      let inputText = inputRef.current.value;
-      if (inputText.trim() != "") {
-        return;
-      }
-      labelRef.current!.style.transform = "translate(0, 0)";
-    } else {
-      if (inputRef.current?.value != "") {
-        return;
-      }
-      labelRef.current!.style.transform = "translate(0,0)";
+    const userFetch = await fetchPost('/user/create', data);
+    if('error' in userFetch){
+      popup({type: 'error', message: userFetch.error, popupRef, setPopupText});
+    }else{
+      popup({type: 'succes', message: userFetch.message, popupRef, setPopupText});
     }
+    
   }
-
+  
   return (
-    <form className="form">
+    <>
+    <section className="popup" ref={popupRef}>
+    {popupText}
+    </section>
+    <form className="form" onSubmit={handleOdSubmit}>
       <div className="form__loginPosition">
         <label
           className="form__loginPosition--label"
@@ -81,9 +88,12 @@ function RegisterForm() {
           }}
         />
       </div>
-      <button className="form__buttonFlex--signupButton">Sign up</button>
+      <button type="submit" className="form__buttonFlex--signupButton">Sign up</button>
     </form>
+    </>
   );
 }
+
+
 
 export default RegisterForm;

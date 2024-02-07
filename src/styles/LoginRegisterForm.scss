@@ -26,12 +26,20 @@
             border-radius: 10px;
         }
         &--loginButton{
-            box-shadow: 0 0 5px 2px rgb(16, 190, 16);
+            box-shadow: 0 0 5px 2px rgb(21, 225, 21);
             color: rgb(18, 187, 18);
+        }
+        &--loginButton:hover{
+            box-shadow: 0 0 5px 2px rgb(140, 255, 140);
+            color: rgb(21, 224, 21);
         }
         &--signupButton{
             color: rgb(13, 121, 209);
             box-shadow: 0 0 5px 2px rgb(18, 141, 243);
+        }
+        &--signupButton:hover{
+            color: rgb(41, 155, 249);
+            box-shadow: 0 0 5px 2px rgb(113, 191, 255);
         }
     }
     &__loginPosition{
@@ -94,3 +102,17 @@
         }
     }
 }
+
+.popup{
+    position: absolute;
+    background-color: rgb(26, 171, 0);
+    width: 50vw;
+    padding: 30px;
+    border-radius: 16px;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%, -500%);
+    box-shadow: inset 0 -2px 0 3px rgb(20, 124, 1);
+    transition: 0.2s all;
+}
+

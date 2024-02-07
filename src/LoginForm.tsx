@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/LoginRegisterForm.scss";
 import { fetchPost } from "./fetchMethods";
+import { handleOnBlur, handleOnFocus } from "./inputAnimations";
+
 
 function LoginForm() {
   const loginRef = useRef<HTMLInputElement>(null);
@@ -20,25 +22,7 @@ function LoginForm() {
         password: form.password.value
     };
   }
-  function handleLoginFocus() {
-    loginLabel.current!.style.transform = "translate(-5px, -15px)";
-  }
-  function handleLoginBlur() {
-    let inputText = loginRef.current?.value;
-    if (inputText?.trim() != "") {
-      return;
-    }
-    loginLabel.current!.style.transform = "translate(0, 0)";
-  }
-  function handlePasswordFocus() {
-    passwordLabel.current!.style.transform = "translate(-5px, -15px)";
-  }
-  function handlePasswordBlur() {
-    if (passwordRef.current?.value != "") {
-      return;
-    }
-    passwordLabel.current!.style.transform = "translate(0, 0)";
-  }
+  
   return (
     <form
       onSubmit={(e) => {
@@ -56,8 +40,8 @@ function LoginForm() {
         </label>
         <br />
         <input
-          onFocus={handleLoginFocus}
-          onBlur={handleLoginBlur}
+          onFocus={()=>{handleOnFocus(loginLabel)}}
+          onBlur={()=>{handleOnBlur(loginLabel, loginRef)}}
           ref={loginRef}
           type="text"
           name="login"
@@ -75,8 +59,8 @@ function LoginForm() {
         </label>
         <br />
         <input
-          onFocus={handlePasswordFocus}
-          onBlur={handlePasswordBlur}
+          onFocus={()=>{handleOnFocus(passwordLabel)}}
+          onBlur={()=>{handleOnBlur(passwordLabel, passwordRef)}}
           ref={passwordRef}
           type="password"
           name="password"
@@ -88,10 +72,11 @@ function LoginForm() {
         <button className="form__buttonFlex--loginButton" onClick={handleLogIn}>
           Log in
         </button>
-        <button className="form__buttonFlex--signupButton">Sign up</button>
+        <button className="form__buttonFlex--signupButton" onClick={()=>{navigate('/signup')}}>Sign up</button>
       </div>
     </form>
   );
 }
 
 export default LoginForm;
+ 

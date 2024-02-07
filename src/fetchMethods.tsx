@@ -10,13 +10,16 @@ async function request(path: string, method : string, body : Object) {
 }
 
 export async function fetchGet(path : string){
-    return request(path, "GET", {});
+    return request(path, "GET", {})
+    .then(res => res.json());
 }
 
 export async function fetchPost(path: string, body : Object) {
-    return request(path, "POST", body);
+    return request(path, "POST", body)
+    .then(res => res.json());
 };
 
 export async function fetchDelete(path : string, body : Object) {
-    return request(path, "DELETE", body);
+    return request(path, "DELETE", body)
+    .then(res => res.json());
 }
