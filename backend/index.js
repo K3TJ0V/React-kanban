@@ -39,17 +39,36 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/user/login", async (req, res) => {});
+app.post("/user/login", async (req, res) => {
+  [login, password] = [req.body.login, req.body.password];
+
+  const loginCheck = await client.query(
+    "SELECT login, password FROM test WHERE login = $1",
+    [login]
+  );
+  if(loginCheck.rows.length === 1){
+    bcrypt.compare(password, loginCheck.rows[0].password).then((result)=>{
+      if(result){
+        res.status(200).send({message: "succesfully logged in", user: loginCheck.rows[0]})
+      }else{
+        res.status(400).send({error: "wrong password"})
+        return
+      }
+    })
+  }else{
+    res.status(400).send({error: "wrong login"})
+  }
+});
 
 app.post("/user/create", async (req, res) => {
   [login, password] = [req.body.login, req.body.password];
 
   const loginCheck = await client.query(
-    "SELECT (login, password) FROM test WHERE login = $1",
+    "SELECT login, password FROM test WHERE login = $1",
     [login]
   );
 
-  if (loginCheck.rows.length != 1) {
+  if (loginCheck.rows.length !== 1) {
     bcrypt.genSalt(12, (err, salt) => {
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
@@ -64,7 +83,7 @@ app.post("/user/create", async (req, res) => {
     });
     res.status(201).send({ message: "user created" });
   } else {
-    res.status(200).send({ error: "login already exists" });
+    res.status(401).send({ error: "login already exists" });
   }
 });
 

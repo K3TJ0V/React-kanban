@@ -115,4 +115,17 @@
     box-shadow: inset 0 -2px 0 3px rgb(20, 124, 1);
     transition: 0.2s all;
 }
-
+.returnButton{
+    box-shadow: 0 0 5px 2px rgb(195, 195, 195);
+    color: rgb(231, 231, 231);
+    padding: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    border-radius: 10px;
+}
+.returnButton:hover{
+    box-shadow: 0 0 5px 2px rgb(255, 255, 255);
+    color: #fff;
+}

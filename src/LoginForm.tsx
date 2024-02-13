@@ -1,16 +1,23 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/LoginRegisterForm.scss";
 import { fetchPost } from "./fetchMethods";
 import { handleOnBlur, handleOnFocus } from "./inputAnimations";
+import { popup } from './popup.ts';
 
+interface LoginFormProps{
+  setLogged: React.Dispatch<React.SetStateAction<boolean>>,
+  setUser: React.Dispatch<React.SetStateAction<{}>>
+}
 
-function LoginForm() {
+function LoginForm({setLogged, setUser} : LoginFormProps) {
   const loginRef = useRef<HTMLInputElement>(null);
   const loginLabel = useRef<HTMLLabelElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordLabel = useRef<HTMLLabelElement>(null);
   const navigate = useNavigate();
+  const [popupText, setPopupText] = useState('test');
+  const popupRef = useRef<HTMLElement>(null);
 
   function handleLogIn() {}
 
@@ -21,9 +28,23 @@ function LoginForm() {
         login: form.login.value,
         password: form.password.value
     };
+    const userFetch = await fetchPost('/user/login', data);
+    if('error' in userFetch){
+      popup({type: 'error', message: userFetch.error, popupRef, setPopupText});
+    }else{
+      popup({type: 'succes', message: userFetch.message, popupRef, setPopupText});
+      setTimeout(() => {
+        setLogged(true)
+        setUser(userFetch.user);
+      }, 2000);
+    }
   }
   
   return (
+    <>
+    <section className="popup" ref={popupRef}>
+    {popupText}
+    </section>
     <form
       onSubmit={(e) => {
         handleOdSubmit(e);
@@ -75,6 +96,7 @@ function LoginForm() {
         <button className="form__buttonFlex--signupButton" onClick={()=>{navigate('/signup')}}>Sign up</button>
       </div>
     </form>
+    </>
   );
 }
 

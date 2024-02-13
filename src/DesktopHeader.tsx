@@ -7,6 +7,7 @@ interface DesktopHeaderProps {
   currentID: number;
   setCurrentID: React.Dispatch<React.SetStateAction<number>>;
   columnList: column[];
+  username: string;
 }
 interface kolumna{
   id: number, 
@@ -20,6 +21,7 @@ function DesktopHeader({
   currentID,
   setCurrentID,
   columnList,
+  username
 }: DesktopHeaderProps) {
   const [currentText, setCurrentText] = useState("");
 
@@ -53,7 +55,7 @@ function DesktopHeader({
             handleEnter(e)
           }}
         />
-        <h1 className="desktopHeader__h1">Welcome back USER</h1>
+        <h1 className="desktopHeader__h1">Welcome back {username}</h1>
       </header>
     </div>
   );

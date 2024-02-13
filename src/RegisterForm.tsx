@@ -33,6 +33,9 @@ function RegisterForm() {
       popup({type: 'error', message: userFetch.error, popupRef, setPopupText});
     }else{
       popup({type: 'succes', message: userFetch.message, popupRef, setPopupText});
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     }
     
   }
@@ -88,7 +91,10 @@ function RegisterForm() {
           }}
         />
       </div>
+      <div className="form__buttonFlex">
+      <button className="returnButton" type="button" onClick={()=>{navigate("/")}}>Return</button>
       <button type="submit" className="form__buttonFlex--signupButton">Sign up</button>
+      </div>
     </form>
     </>
   );
