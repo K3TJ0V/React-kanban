@@ -4,13 +4,15 @@ import "./styles/LoginRegisterForm.scss";
 import { fetchPost } from "./fetchMethods";
 import { handleOnBlur, handleOnFocus } from "./inputAnimations";
 import { popup } from './popup.ts';
+import { fetchedColumns } from "./Classes.ts";
 
 interface LoginFormProps{
   setLogged: React.Dispatch<React.SetStateAction<boolean>>,
-  setUser: React.Dispatch<React.SetStateAction<{}>>
+  setUser: React.Dispatch<React.SetStateAction<{}>>,
+  setColumns: React.Dispatch<React.SetStateAction<fetchedColumns[]>> 
 }
 
-function LoginForm({setLogged, setUser} : LoginFormProps) {
+function LoginForm({setLogged, setUser, setColumns} : LoginFormProps) {
   const loginRef = useRef<HTMLInputElement>(null);
   const loginLabel = useRef<HTMLLabelElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -36,7 +38,8 @@ function LoginForm({setLogged, setUser} : LoginFormProps) {
       setTimeout(() => {
         setLogged(true)
         setUser(userFetch.user);
-      }, 2000);
+        setColumns(userFetch.columnData)
+      }, 4000);
     }
   }
   

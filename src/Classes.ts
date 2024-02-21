@@ -57,3 +57,11 @@ export class task {
     this._shortDesc = newShortDesc;
   }
 }
+export interface fetchedColumns {
+  id: number;
+  tittle: string;
+  user_id: number;
+  description: string;
+  shortDescription: string;
+  column_id: number;
+}

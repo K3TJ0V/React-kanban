@@ -8,13 +8,14 @@ import { column, task } from "./Classes";
 import DesktopHeader from "./DesktopHeader";
 
 interface PageProps{
-  user: {login: string, password: string}
+  user: {id: number ,login: string, password: string},
+  fetchedColumns: column[];
 }
 
-function Page({user} : PageProps) {
+function Page({user, fetchedColumns} : PageProps) {
   const [currentwidth, setCurrentWidth] = useState(window.innerWidth);
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
-  const [columns, setColumns] = useState<Array<column>>([]);
+  const [columns, setColumns] = useState<Array<column>>(fetchedColumns);
   const [columnNextID, setColumnNextID] = useState(1);
   const [nextTaskID, setNextTaskID] = useState(1);
 

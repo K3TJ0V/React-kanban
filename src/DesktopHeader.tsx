@@ -9,12 +9,6 @@ interface DesktopHeaderProps {
   columnList: column[];
   username: string;
 }
-interface kolumna{
-  id: number, 
-  tittle: string, 
-  taskList: []
-}
-
 
 function DesktopHeader({
   setColumns,
