@@ -8,7 +8,7 @@ import { column, task } from "./Classes";
 import DesktopHeader from "./DesktopHeader";
 
 interface PageProps{
-  user: {id: number ,login: string, password: string},
+  user: {id: number ,login: string, password: string, next_column_id: number},
   fetchedColumns: column[];
 }
 
@@ -16,7 +16,7 @@ function Page({user, fetchedColumns} : PageProps) {
   const [currentwidth, setCurrentWidth] = useState(window.innerWidth);
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
   const [columns, setColumns] = useState<Array<column>>(fetchedColumns);
-  const [columnNextID, setColumnNextID] = useState(1);
+  const [columnNextID, setColumnNextID] = useState(user.next_column_id);
   const [nextTaskID, setNextTaskID] = useState(1);
 
   window.addEventListener("resize", (e: Event) => {
@@ -72,6 +72,7 @@ function Page({user, fetchedColumns} : PageProps) {
           currentID={columnNextID}
           setCurrentID={setColumnNextID}
           username={user.login}
+          userID={user.id}
         />
       )}
 

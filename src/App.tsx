@@ -12,7 +12,7 @@ function App(){
 
     columns.forEach(row =>{
       let columnTemplate = new column(
-        row.column_id,
+        row.colid,
         row.tittle,
         [],
       )
@@ -24,6 +24,9 @@ function App(){
     columns.forEach(row =>{
       downloadedColumns.map(item =>{
         if(item.id === row.column_id){
+          if(row.column_id === null){
+            return;
+          }
           let taskTemplate = new task(row.id, row.description, row.shortDescription)
           item.taskList.push(taskTemplate);
         }

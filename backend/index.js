@@ -42,7 +42,7 @@ app.post("/user/login", async (req, res) => {
   [login, password] = [req.body.login, req.body.password];
 
   const loginCheck = await client.query(
-    "SELECT id, login, password FROM users WHERE login = $1",
+    "SELECT id, login, password, next_column_id FROM users JOIN next_ids ON next_ids.user_id = users.id WHERE login = $1;",
     [login]
   );
   if (loginCheck.rows.length === 1) {
@@ -51,14 +51,15 @@ app.post("/user/login", async (req, res) => {
       .then(async (result) => {
         if (result) {
           const columns = await client.query(
-            "SELECT * FROM columns JOIN tasks ON tasks.column_id = columns.id WHERE columns.user_id = $1;", [loginCheck.rows[0].id]
+            "SELECT columns.id as colID, * FROM columns LEFT JOIN tasks ON tasks.column_id = columns.id WHERE columns.user_id = $1;", [loginCheck.rows[0].id]
           );
+          console.log(columns.rows);
           res
             .status(200)
             .send({
               message: "succesfully logged in",
               user: loginCheck.rows[0],
-              columnData: columns.rows,
+              columnData: columns.rows
             });
         } else {
           res.status(400).send({ error: "wrong password" });
@@ -95,6 +96,8 @@ app.post("/user/create", async (req, res) => {
           login,
           hash,
         ]);
+        const newUserID = await client.query("SELECT id FROM users WHERE login = $1", [login])
+        await client.query("INSERT INTO next_ids VALUES($1,1)",[newUserID.rows[0].id])
       });
     });
     res.status(201).send({ message: "user created" });
@@ -102,6 +105,12 @@ app.post("/user/create", async (req, res) => {
     res.status(401).send({ error: "login already exists" });
   }
 });
+
+app.post("/column/add", async (req, res) =>{
+  [id, userID, tittle] = [req.body.id, req.body.userID, req.body.tittle]
+  await client.query("INSERT INTO columns VALUES($1,$2,$3)",[id, tittle, userID])
+  res.status(201)
+})
 
 app.listen(6050, null, () => {
   console.log("Server started");

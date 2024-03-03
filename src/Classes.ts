@@ -58,6 +58,7 @@ export class task {
   }
 }
 export interface fetchedColumns {
+  colid: number;
   id: number;
   tittle: string;
   user_id: number;

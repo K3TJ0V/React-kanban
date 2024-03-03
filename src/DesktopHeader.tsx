@@ -1,6 +1,7 @@
 import "./styles/DesktopHeader.scss";
 import { column } from "./Classes";
 import { useState } from "react";
+import { fetchPost } from "./fetchMethods";
 
 interface DesktopHeaderProps {
   setColumns: React.Dispatch<React.SetStateAction<column[]>>;
@@ -8,6 +9,7 @@ interface DesktopHeaderProps {
   setCurrentID: React.Dispatch<React.SetStateAction<number>>;
   columnList: column[];
   username: string;
+  userID: number;
 }
 
 function DesktopHeader({
@@ -15,7 +17,8 @@ function DesktopHeader({
   currentID,
   setCurrentID,
   columnList,
-  username
+  username,
+  userID
 }: DesktopHeaderProps) {
   const [currentText, setCurrentText] = useState("");
 
@@ -26,11 +29,16 @@ function DesktopHeader({
     }
     if (event.key === "Enter") {
       const newColumn = new column(currentID, currentText.trim(), []);
+      const data = {
+        userID: userID,
+        tittle: newColumn.tittle,
+        id: newColumn.id
+      };
+      fetchPost("/column/add", data);
       setColumns([...columnList, newColumn]);
       setCurrentID(currentID + 1);
       setCurrentText("");
   }}
-  // http://localhost:6050/addcolumn
 
   return (
     <div className="flexHeader">
