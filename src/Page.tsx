@@ -6,9 +6,10 @@ import MobileInput from "./MobileInput";
 import Column from "./Column";
 import { column, task } from "./Classes";
 import DesktopHeader from "./DesktopHeader";
+import { fetchPost } from "./fetchMethods";
 
 interface PageProps{
-  user: {id: number ,login: string, password: string, next_column_id: number},
+  user: {id: number ,login: string, password: string, next_column_id: number, next_task_id: number},
   fetchedColumns: column[];
 }
 
@@ -17,15 +18,16 @@ function Page({user, fetchedColumns} : PageProps) {
   const [hamburgerVisibility, setHamburgerVisibility] = useState(false);
   const [columns, setColumns] = useState<Array<column>>(fetchedColumns);
   const [columnNextID, setColumnNextID] = useState(user.next_column_id);
-  const [nextTaskID, setNextTaskID] = useState(1);
+  const [nextTaskID, setNextTaskID] = useState(user.next_task_id);
 
   window.addEventListener("resize", (e: Event) => {
     const target = e.currentTarget as Window;
     setCurrentWidth(target.innerWidth);
   });
 
-  function handleOnDelete(id: number) {
+  async function handleOnDelete(id: number) {
     setColumns(columns.filter((item) => item.id !== id));
+    const deletingColumn = await fetchPost("/column/delete", {id: id})
   }
   function handleTaskDelete(newTaskList: task[], colID: number) {
     let placeholder: column[] = [];
@@ -39,7 +41,7 @@ function Page({user, fetchedColumns} : PageProps) {
     });
     setColumns(placeholder);
   }
-  function handleTaskMove(
+  async function handleTaskMove(
     movedTask: task,
     targetColumnID: number,
     columnInstance: column
@@ -54,6 +56,7 @@ function Page({user, fetchedColumns} : PageProps) {
         item.taskList = [...item.taskList, movedTask];
       }
     });
+    await fetchPost("/task/move", {taskID: movedTask.id, column_id: targetColumnID});
     setColumns([...columns]);
   }
 
@@ -99,6 +102,7 @@ function Page({user, fetchedColumns} : PageProps) {
               taskMove={handleTaskMove}
               nextTaskID={nextTaskID}
               setNextTaskID={setNextTaskID}
+              userID={user.id}
             />
           );
         })}

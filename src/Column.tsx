@@ -4,6 +4,7 @@ import Agreement from "./Agreement";
 import { task, column } from "./Classes";
 import Task from "./Task";
 import TaskCreator from "./TaskCreator";
+import { fetchPost } from "./fetchMethods";
 
 
 interface ColumnProps {
@@ -17,7 +18,8 @@ interface ColumnProps {
   ) => void;
   columns: column[];
   nextTaskID: number;
-  setNextTaskID: React.Dispatch<React.SetStateAction<number>>;
+  setNextTaskID: React.Dispatch<React.SetStateAction<number>>,
+  userID: number;
 }
 
 function Column({
@@ -28,14 +30,16 @@ function Column({
   taskMove,
   nextTaskID,
   setNextTaskID,
+  userID
 }: ColumnProps) {
   const [showPopup, setShowPopup] = useState(false);
   const [creatorVisibility, setCreatorVisibility] = useState(false);
 
-  function handleTaskDelete(taskID: number) {
+  async function handleTaskDelete(taskID: number) {
     colInstance.taskList = colInstance.taskList.filter(
       (item) => item.id !== taskID
     );
+    await fetchPost("/task/delete", {id: taskID})
     deleteRerender(colInstance.taskList, colInstance.id);
   }
   return (
@@ -56,6 +60,7 @@ function Column({
             nextTaskID={nextTaskID}
             setNextTaskID={setNextTaskID}
             visibility={setCreatorVisibility}
+            userID={userID}
           />
         )}
         <div className="column__taskList">
