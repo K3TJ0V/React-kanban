@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { column, task } from "./Classes";
 import "./styles/TaskMenu.scss";
+import { fetchPost } from "./fetchMethods";
 
 interface TaskMenuProps {
   taskInstance: task;
@@ -47,6 +48,11 @@ function TaskMenu({
             className="taskMenu__shortDesc--saveButton"
             onClick={() => {
               setShortDescEdit(!shortDescEdit);
+              const data = {
+                taskID: taskInstance.id,
+                shortDesc: currentShortDesc
+              }
+              fetchPost("/task/shortDesc/edit", data);
               taskInstance.shortDesc = currentShortDesc;
             }}
           >
@@ -76,6 +82,11 @@ function TaskMenu({
             className="taskMenu__desc--saveButton"
             onClick={() => {
               setDescEdit(!descEdit);
+              const data = {
+                taskID: taskInstance.id,
+                desc: currentDesc
+              }
+              fetchPost("/task/desc/edit", data);
               taskInstance.desc = currentDesc;
             }}
           >

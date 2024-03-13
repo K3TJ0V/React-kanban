@@ -27,7 +27,7 @@ function App(){
           if(row.column_id === null){
             return;
           }
-          let taskTemplate = new task(row.id, row.description, row.shortDescription)
+          let taskTemplate = new task(row.id, row.description, row.short_description)
           item.taskList.push(taskTemplate);
         }
       })

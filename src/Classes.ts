@@ -63,6 +63,6 @@ export interface fetchedColumns {
   tittle: string;
   user_id: number;
   description: string;
-  shortDescription: string;
+  short_description: string;
   column_id: number;
 }

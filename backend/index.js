@@ -174,8 +174,31 @@ app.post("/task/move", async (req, res) => {
   }
   res.status(201).send({message: "succesfully moved task"})
 });
-app.post("/task/desc/edit", async (req, res) => {});
-app.post("/task/shortDesc/edit", async (req, res) => {});
+
+
+app.post("/task/desc/edit", async (req, res) => {
+  [id, desc] = [req.body.taskID, req.body.desc];
+  try{
+    await client.query("UPDATE tasks SET description = $1 WHERE id = $2", [desc, id])
+  }catch{
+    res.status(401).send({error: "couldn't update description, action not saved"});
+  }
+  res.status(201).send({message: "succesfully changed description"})
+});
+
+
+app.post("/task/shortDesc/edit", async (req, res) => {
+  [id, shortDesc] = [req.body.taskID, req.body.shortDesc];
+  console.log(id, shortDesc);
+  try{
+    await client.query("UPDATE tasks SET short_description = $1 WHERE id = $2", [shortDesc, id])
+  }catch{
+    res.status(401).send({error: "couldn't update short description, action not saved"});
+  }
+
+
+  res.status(201).send({message: "succesfully changed short descriotpion"})
+});
 
 app.listen(6050, null, () => {
   console.log("Server started");

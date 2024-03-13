@@ -2,6 +2,7 @@ import "./styles/MobileInput.scss";
 import HamburgerButton from "./HamburgerButton";
 import { column } from "./Classes";
 import { useState } from "react";
+import { fetchPost } from "./fetchMethods";
 
 interface MobileInputProps {
   hamburger: boolean;
@@ -10,6 +11,7 @@ interface MobileInputProps {
   setColumns: React.Dispatch<React.SetStateAction<column[]>>;
   currentID: number;
   setCurrentID: React.Dispatch<React.SetStateAction<number>>;
+  userID: number;
 }
 
 function MobileInput({
@@ -19,6 +21,7 @@ function MobileInput({
   setCurrentID,
   setHamburger,
   setColumns,
+  userID
 }: MobileInputProps) {
   const [currentText, setCurrentText] = useState("");
 
@@ -29,6 +32,12 @@ function MobileInput({
     }
     if (event.key === "Enter") {
       const newColumn = new column(currentID, currentText.trim(), []);
+      const data = {
+        userID: userID,
+        tittle: newColumn.tittle,
+        id: newColumn.id
+      };
+      fetchPost("/column/add", data);
       setColumns([...columnList, newColumn]);
       setCurrentID(currentID + 1);
       setCurrentText("");

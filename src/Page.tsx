@@ -87,6 +87,7 @@ function Page({user, fetchedColumns} : PageProps) {
           columnList={columns}
           currentID={columnNextID}
           setCurrentID={setColumnNextID}
+          userID={user.id}
         ></MobileInput>
       )}
 
